@@ -1,6 +1,7 @@
 import { api } from "@/api/instance.api";
 import { ActiveSignals, CustomSignal, JoinSignalResponse, RandomSignal } from "@/types/signal.interface";
 import { userService } from "./user.service";
+import { Profits } from "@/types/signal.interface";
 
 class SignalService {
     public async joinSignal(telegram_id: number, signal_id: number) {
@@ -60,6 +61,15 @@ class SignalService {
             throw error;
         }
     }
+
+    public async profits() {
+            try {
+                const response = await api.get<Profits>(`profits/${(await userService.getUser()).telegram_id}`);
+                return response;
+            } catch (error) {
+                throw error;
+            }
+        }
 }
 
 export const signalService = new SignalService()

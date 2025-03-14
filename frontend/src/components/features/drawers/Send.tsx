@@ -14,6 +14,7 @@ export default function Send() {
   const [inputValue, setInputValue] = useState<string>("");
   const queryClient = useQueryClient();
   const router = useRouter();
+  const [keyboard, setKeyboard] = useState<boolean>(false);
 
   const t = useTranslations("SendDrawer");
 
@@ -68,9 +69,10 @@ export default function Send() {
                 onFocus={(e) => e.target.blur()}
                 value={inputValue}
                 readOnly
+                onClick={() => setKeyboard(!keyboard)}
                 />
             </div>
-            <VirtualKeyboard onKeyPress={handleKeyPress} onDelete={handleDelete}/>
+            {keyboard ? <VirtualKeyboard onKeyPress={handleKeyPress} onDelete={handleDelete}/> : ''}
             <Button onClick={tranferToMain} className="w-full bg-primary text-primary-foreground hover:bg-primary">{t("button")}</Button>
         </div>
   )

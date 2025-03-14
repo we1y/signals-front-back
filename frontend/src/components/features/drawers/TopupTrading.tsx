@@ -9,11 +9,14 @@ import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import VirtualKeyboard from "@/components/ui/custom/VirtualKeyboard";
+import failed from '../../../../public/icons/hand.png';
+import Image from 'next/image';
 
 export default function TopupTrading() {
   const [inputValue, setInputValue] = useState<string>("");
   const queryClient = useQueryClient();
   const router = useRouter();
+  const [keyboard, setKeyboard] = useState<boolean>(false);
 
   const { data } = useQuery({
     queryKey: ['balance'],
@@ -74,12 +77,16 @@ export default function TopupTrading() {
                 onFocus={(e) => e.target.blur()}
                 value={inputValue}
                 readOnly
+                onClick={() => setKeyboard(!keyboard)}
                 />
-                <VirtualKeyboard onKeyPress={handleKeyPress} onDelete={handleDelete}/>
+                {keyboard ? <VirtualKeyboard onKeyPress={handleKeyPress} onDelete={handleDelete}/> : ''}
                 <Button onClick={tranferToTrading} className="w-full bg-primary text-primary-foreground hover:bg-primary">{t("button")}</Button>
               </div>
             ) : (
-              <div>{t("nosuch")}</div>
+              <div className='space-y-4 text-center font-bold flex flex-col items-center'>
+                <Image src={failed} alt=""/>
+                <p className="text-black">{t("nosuch")}</p>
+              </div>
             )}  
         </div>
   )

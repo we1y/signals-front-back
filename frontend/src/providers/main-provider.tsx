@@ -10,7 +10,7 @@ export function MainProvider({ children }: PropsWithChildren) {
 			defaultOptions: {
 				queries: {
 					refetchOnWindowFocus: true,
-					refetchInterval: 1
+					staleTime: 1000,
 				}
 			}
 		})
@@ -19,7 +19,7 @@ export function MainProvider({ children }: PropsWithChildren) {
 	return (
 		<QueryClientProvider client={client}>
 			{children}
-			<Toaster />
+			<Toaster position='top-0'/>
 		</QueryClientProvider>
 	)
 }

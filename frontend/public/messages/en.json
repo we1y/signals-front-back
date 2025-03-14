@@ -27,18 +27,21 @@
         "minutes": "Minutes",
         "profit": "Profit",
         "time": "Time",
-        "risk": "Risk"
+        "risk": "Risk",
+        "ecprofit": "Daily profit qquivalent"
     },
     "Auth": {
-        "title": "You are not authorized",
-        "authorize": "Before start, please go to bot page and press /start"
+        "title": "You are not logged in, your authorization token is expired",
+        "authorize": "Go to the authorization page",
+        "desktop": "You are using the desktop version of the application, please use your mobile phone to continue"
     },
     "Settings": {
         "loading": "Loading...",
         "title": "Settings",
         "work": "Chose operating mode",
         "language": "Language",
-        "id": "id"
+        "id": "id",
+        "reinvest": "Select a percentage of income to reinvest"
     },
     "Transactions": {
         "title": "Transactions",
@@ -68,7 +71,7 @@
     "TopupTradingDrawer": {
         "label": "Top up balance from main",
         "inputplaceholder": "100",
-        "nosuch": "No such money on main",
+        "nosuch": "No such money on main balance",
         "button": "Top up"
     },
     "Automod": {

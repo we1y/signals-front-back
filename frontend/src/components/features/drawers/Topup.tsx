@@ -14,6 +14,7 @@ export default function Topup() {
   const [inputValue, setInputValue] = useState<string>("");
   const queryClient = useQueryClient();
   const router = useRouter();
+  const [keyboard, setKeyboard] = useState<boolean>(false);
 
   const mutation = useMutation({
     mutationKey: ['topup main'],
@@ -58,9 +59,10 @@ export default function Topup() {
                 onFocus={(e) => e.target.blur()}
                 value={inputValue}
                 readOnly
+                onClick={() => setKeyboard(!keyboard)}
                 />
             </div>
-            <VirtualKeyboard onKeyPress={handleKeyPress} onDelete={handleDelete}/>
+            {keyboard ? <VirtualKeyboard onKeyPress={handleKeyPress} onDelete={handleDelete}/> : ''}
             <Button onClick={topupMainBalance} className="w-full bg-primary text-primary-foreground hover:bg-primary">{t("button")}</Button>
         </div>
   )

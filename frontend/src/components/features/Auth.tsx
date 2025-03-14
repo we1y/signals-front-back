@@ -1,25 +1,24 @@
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/common/card";
-import { CircleAlert, ClipboardIcon } from "lucide-react";
+'use client'
+
 import { Button } from "../ui/common/button";
 import { useTranslations } from "next-intl";
+import { useRouter } from "next/navigation";
+import failed from "../../../public/icons/hand.png"
+import Image from "next/image";
 
-export default function Auth () {
+export default function Auth() {
     const t = useTranslations("Auth");
+    const router = useRouter();
 
     return (
-        <Card className="m-4 items-center text-center flex-col font-bold">
-            <CardHeader>
-                <CardTitle>{t("title")}</CardTitle>
-            </CardHeader>
-            <CardContent>
-                <CircleAlert className="w-full" size={128}/>
-            </CardContent>
-            <CardFooter className="flex-col space-y-2">
-                <p>{t("authorize")}</p>
-                <Button className='w-full rounded-xl shadow-none text-center m-2'>
-                    {process.env.NEXT_PUBLIC_BOT_URL} <ClipboardIcon />
+        <div className="flex items-center justify-center min-h-screen">
+            <div className='text-center m-2 items-center flex flex-col'>
+                <Image src={failed} alt=""/>
+                <h1 className="font-bold m-4">{t("title")}</h1>
+                <Button className='hover:bg-primary-foreground' onClick={() => router.push(`${process.env.NEXT_PUBLIC_BOT_URL}`)}>
+                    {t("authorize")}
                 </Button>
-            </CardFooter>
-        </Card>
+            </div>
+        </div>
     )
   };

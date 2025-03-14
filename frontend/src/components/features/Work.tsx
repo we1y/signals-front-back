@@ -1,6 +1,5 @@
 'use client'
 
-import * as React from "react"
 import {
   Card,
   CardContent,
@@ -12,20 +11,23 @@ import { Drawer, DrawerTrigger, DrawerContent, DrawerTitle } from "@/components/
 import { Button } from "@/components/ui/common/button";
 import Send from "@/components/features/drawers/Send";
 import Referrals from "@/components/features/drawers/Referrals";
-import Transactions from "@/components/features/drawers/Transactions";
 import Topup from "@/components/features/drawers/Topup";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";;
 import { useQuery } from "@tanstack/react-query";
 import { balanceService } from "@/services/balance.service";
 import { useTranslations } from "next-intl";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 export default function Work() {
-    const { data: userBalance, isLoading: loadingUserBalance } = useQuery({
+    const router = useRouter();
+
+    const { data: userBalance, isLoading: loadingUserBalance, refetch: refetchUserBalance } = useQuery({
             queryKey: ['user balance'],
-            queryFn: () => balanceService.getUserBalance()
+            queryFn: () => balanceService.getUserBalance(),
     })
 
-    const { data: investments, isLoading: loadingUserInvestments } = useQuery({
+    const { data: investments, isLoading: loadingUserInvestments, refetch: refetchInvestments } = useQuery({
         queryKey: ['user investments'],
         queryFn: () => balanceService.investments()
     })
@@ -35,6 +37,11 @@ export default function Work() {
     const investmentsAmount = investments?.investments?.reduce((sum: number, investment: { amount: number }) => {
         return sum + investment.amount;
     }, 0);
+
+    useEffect(() => {
+        refetchUserBalance();
+        refetchInvestments();
+    }, []);
 
     return (
             <Card className='text-center p-2'>
@@ -95,20 +102,11 @@ export default function Work() {
                             <Referrals />
                         </DrawerContent>
                     </Drawer>
-                    <Drawer>
-                        <DrawerTrigger asChild>
-                            <Button variant='ghost' className='h-full flex flex-col rounded-xl items-center text-xs p-2 [&_svg]:size-10'>
-                                <Text className="bg-primary-foreground text-primary rounded-full p-2"/>
-                                <p>{t("transactions")}</p>
-                            </Button>
-                        </DrawerTrigger>
-                        <DrawerContent aria-describedby={undefined} className='flex items-center'>
-                            <DrawerTitle>
-                                {t("transactions")}
-                            </DrawerTitle>
-                            <Transactions />
-                        </DrawerContent>
-                    </Drawer>
+                    <Button variant='ghost' className='h-full flex flex-col rounded-xl items-center text-xs p-2 [&_svg]:size-10' onClick={() => router.push('/transactions')}>
+                        <Text className="bg-primary-foreground text-primary rounded-full p-2"/>
+                        <p>{t("transactions")}</p>
+                    </Button>
+                        
                 </CardFooter>
             </Card>
     )

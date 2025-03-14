@@ -3,12 +3,10 @@
 import BackButton from "@/components/features/telegram/BackButton"
 import { Button } from "@/components/ui/common/button"
 import { Card } from "@/components/ui/common/card"
-import { profitsService } from "@/services/profits.service"
 import { signalService } from "@/services/signal.service"
 import { userService } from "@/services/user.service"
 import { JoinSignal, JoinSignalResponse } from "@/types/signal.interface"
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
-import { CodeSquare } from "lucide-react"
 import { useTranslations } from "next-intl"
 import { useRouter } from "next/navigation"
 
@@ -23,10 +21,10 @@ export default function Signals() {
     const queryClient = useQueryClient();
     const router = useRouter();
 
-    // const { data: profits } = useQuery({
-    //     queryKey: ['profits'],
-    //     queryFn: () => profitsService.profits()
-    // });
+    const { data: profits } = useQuery({
+        queryKey: ['profits'],
+        queryFn: () => signalService.profits()
+    });
 
     const user = useQuery({
         queryKey: ['user telegram id'],
@@ -41,7 +39,7 @@ export default function Signals() {
         const response = await signalService.joinSignal(telegram_id, signal_id);
         if (response === undefined) {
             queryClient.invalidateQueries();
-            router.push(`/success?message=${encodeURIComponent("Ошибка входа в сигнал, проверьте ваш баланс")}`);
+            router.push(`/failed?message=${encodeURIComponent("Ошибка входа в сигнал")}`);
             throw new Error("Received undefined response from joinSignal");
         }
         return response;
@@ -85,7 +83,7 @@ export default function Signals() {
                     </div>
                     <div className="bg-blue-200 rounded-3xl flex items-center justify-center flex-col">
                         <p>{t("profit")}:</p>   
-                        {/* {profits}    */}
+                        {(signal.profit_percent * 100).toFixed(2)}%       
                     </div>
                     <div className="bg-blue-200 rounded-3xl flex items-center justify-center flex-col">
                         <p>{t("time")}:</p>
@@ -93,7 +91,7 @@ export default function Signals() {
                     </div>
                 </div>
                 <div className="text-start text-xs">
-                    Дневная прибыль эквивалента = 1000%
+                    {t("ecprofit")} ≈ {profits?.amount === undefined ? '0' : (((profits.amount * signal.profit_percent) * 100).toFixed(2))}%
                 </div>
             </Card>
             )

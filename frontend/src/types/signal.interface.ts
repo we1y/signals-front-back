@@ -21,6 +21,7 @@ interface ActiveSignal {
     expires_at: Date
     signal_cost: number
     burn_chance: number
+    profit_percent: number
 }
 
 export interface JoinSignal {
@@ -33,4 +34,11 @@ export interface JoinSignalResponse {
     success: boolean;
     required_amount?: number;
     current_balance?: number;
+}
+
+export interface Profits {
+    id: number,
+    amount: number
+    signal_id: number
+    created_at: Date
 }

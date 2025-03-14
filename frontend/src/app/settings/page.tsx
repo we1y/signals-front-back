@@ -1,6 +1,7 @@
 'use client'
 
 import Plans from "@/components/features/drawers/Plans";
+import Reinvest from "@/components/features/drawers/Reinvest";
 import BackButton from "@/components/features/telegram/BackButton";
 import { Button } from "@/components/ui/common/button";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/common/card";
@@ -35,6 +36,19 @@ export default function Settings() {
                                 <VisuallyHidden>{t("title")}</VisuallyHidden>
                             </DrawerTitle>
                             <Plans />
+                        </DrawerContent>
+                    </Drawer>
+                    <Drawer>
+                        <DrawerTrigger asChild>
+                            <Button className='w-full h-full flex flex-col rounded-xl items-center text-xs p-2 hover:bg-primary-foreground'>
+                                {t("reinvest")}
+                            </Button>
+                        </DrawerTrigger>
+                        <DrawerContent aria-describedby={undefined} className='flex items-center'>
+                            <DrawerTitle>
+                                <VisuallyHidden>{t("title")}</VisuallyHidden>
+                            </DrawerTitle>
+                            <Reinvest />
                         </DrawerContent>
                     </Drawer>
                     <div>

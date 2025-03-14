@@ -1,4 +1,4 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { api } from "@/api/instance.api";
 import { CheckReferral } from "./types/referral.interface";
 import { userService } from "./services/user.service";
@@ -8,18 +8,30 @@ import { userService } from "./services/user.service";
 //     status: 301,
 // });
 
-export async function middleware(request: { nextUrl: { pathname: any, searchParams: any }; url: string | URL | undefined; }) {
+export async function middleware(request: NextRequest) {
     const { pathname, searchParams } = request.nextUrl;
     const referralMatch = pathname.match(/\/ref\/(\d+)-(\d+)/);
     // const expiresTime = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
     const expiresTime = new Date(Date.now() + 60 * 60 * 1000);
+    // const userAgent = request.headers.get('user-agent') || '';
+    // const isMobile = /Mobi/i.test(userAgent);
+
+    // const response = NextResponse.next();
+    // response.cookies.set('isMobile', isMobile ? 'true' : 'false');
 
 
     if (pathname === '/auth' && searchParams.has('token')) {
         const authToken = searchParams.get('token');
-        const response = NextResponse.redirect(new URL('/', request.url));
-        response.cookies.set('auth', authToken, { path: '/', expires: expiresTime});
-        return response;
+        console.log(authToken);
+
+        if (authToken) {
+            const response = NextResponse.redirect(new URL('/', request.url));
+            response.cookies.set('auth', authToken, { path: '/', expires: expiresTime });
+            return response;
+        } else {
+            console.error('Token is null');
+            return NextResponse.redirect(new URL('/error', request.url));
+        }
     }
 
 

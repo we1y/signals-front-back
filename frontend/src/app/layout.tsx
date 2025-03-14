@@ -6,6 +6,7 @@ import { cookies } from "next/headers";
 import Auth from "@/components/features/Auth";
 import {NextIntlClientProvider} from 'next-intl';
 import {getLocale, getMessages} from 'next-intl/server';
+import Desktop from "@/components/features/Desktop";
 
 
 export const metadata: Metadata = {
@@ -20,6 +21,7 @@ export default async function RootLayout({
 }>) {
   const cookieStore = await cookies();
   const token = cookieStore.get('auth');
+  const isMobile = cookieStore.get('isMobile');
   const locale = await getLocale();
   const messages = await getMessages();
 
@@ -39,7 +41,9 @@ export default async function RootLayout({
               enableSystem
               disableTransitionOnChange
             >
-              {token ? children : <Auth />}
+              {token 
+                  ? (isMobile?.value === 'false' ? <Desktop /> : children) 
+                  : <Auth />}
             </ThemeProvider>
           </MainProvider>
         </NextIntlClientProvider>
