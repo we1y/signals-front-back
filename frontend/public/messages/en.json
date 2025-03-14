@@ -1,0 +1,95 @@
+{
+    "Balance": {
+        "loading": "Loading...",
+        "title": "TRADING BALANCE",
+        "button": "Top up TRADING balance from BALANCE"
+    },
+    "Work": {
+        "loading": "Loading...",
+        "balance": "Balance",
+        "inprogress": "In progress",
+        "send": "Send",
+        "topup": "Topup",
+        "referrals": "Referrals",
+        "transactions": "Transactions"
+    },
+    "SignalsCard": {
+        "loading": "Loading...",
+        "noinprogress": "No signals in progress",
+        "inprogress": "In progress"
+    },
+    "Signals": {
+        "loading": "Loading...",
+        "noactivesignals": "No active signals available",
+        "id": "Signal code",
+        "sign": "Sign on",
+        "hours": "Hours",
+        "minutes": "Minutes",
+        "profit": "Profit",
+        "time": "Time",
+        "risk": "Risk"
+    },
+    "Auth": {
+        "title": "You are not authorized",
+        "authorize": "Before start, please go to bot page and press /start"
+    },
+    "Settings": {
+        "loading": "Loading...",
+        "title": "Settings",
+        "work": "Chose operating mode",
+        "language": "Language",
+        "id": "id"
+    },
+    "Transactions": {
+        "title": "Transactions",
+        "loading": "Loading..."
+    },
+    "ReferralsDrawer": {
+        "title": "Income from referral system",
+        "systemtab": "System",
+        "referralstab": "Your referrals",
+        "share": "Share the opportunity and increase your income with our referral program!",
+        "invite": "Invite",
+        "referrals": "Your referrals",
+        "noreferrals": "No referrals",
+        "loading": "Loading...",
+        "copied": "Copied"
+    },
+    "SendDrawer": {
+        "label": "Send",
+        "inputplaceholder": "100",
+        "button": "Send"
+    },
+    "TopupDrawer": {
+        "label": "Top up balance",
+        "inputplaceholder": "100",
+        "button": "Top up"
+    },
+    "TopupTradingDrawer": {
+        "label": "Top up balance from main",
+        "inputplaceholder": "100",
+        "nosuch": "No such money on main",
+        "button": "Top up"
+    },
+    "Automod": {
+        "label": "Automod",
+        "info": "What is automod?"
+    },
+    "Plans": {
+        "currentplan": "Current plan",
+        "work": "Chose operating mode",
+        "standart": "STANDART",
+        "premium": "PREMIUM",
+        "premiumplus": "PREMIUM+",
+        "cells": "Cells for work",
+        "poolsignals": "Number of signals in the pool",
+        "percentage": "Percentage of income per day",
+        "automodprofit": "Automod profitability",
+        "freezetime": "Freezetime",
+        "next": "Continue",
+        "accept": "Accept",
+        "back": "Back",
+        "reinvest": "Reinvestment",
+        "reinvestprofit": "Select a percentage of income to reinvest"
+    }
+}

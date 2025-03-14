@@ -1,0 +1,58 @@
+version: '3.7'
+
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    ports:
+      - "8000:8000"
+    networks:
+      - app-network
+    environment:
+      BACKEND_HOST: backend
+      SECRET_KEY: 8f3b0d45cb72a9c45df06a7c9d4858c6d0e1e6eb7a7bfa72a07a9350fd5db2b062
+      TELEGRAM_BOT_TOKEN: 8116174417:AAGohzgByS3NS4BuBeOt9ZnD2gBTzhW4SlU
+      PROFIT_PERCENTAGE: 1.01
+      BURN_CHANCE: 0.1
+      JOIN_DURATION: 1
+      PROCESSING_DURATION: 1
+      JOIN_TIME: 300
+      ACTIVE_TIME: 1800
+      API_KEY: your_nowpayments_api_key
+      # Используйте IP адрес хоста вместо localhost или host.docker.internal
+      DATABASE_URL: postgresql+asyncpg://signalis_user:1234@194.87.92.198:5432/signalis_db  # Используем IP хоста
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    depends_on:
+      - backend
+    networks:
+      - app-network
+    environment:
+      REACT_APP_API_URL: https://signals-bot.ru/api
+
+  nginx:
+    image: nginx:latest
+    container_name: nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf  # Убедитесь, что nginx.conf существует
+      - /etc/ssl/certs:/etc/ssl/certs
+      - /etc/ssl/private:/etc/ssl/private # Монтируем нужный каталог для certbot
+    command: ["nginx", "-g", "daemon off;"]
+    depends_on:
+      - frontend
+      - backend
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
